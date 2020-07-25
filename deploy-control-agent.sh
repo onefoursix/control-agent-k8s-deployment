@@ -25,7 +25,8 @@ if [ -z "$AGENT_TOKEN" ]; then
 fi
 
 ## Create Namespace if it does not exist
-if kubectl describe namespace ${KUBE_NAMESPACE} | grep  Status | grep -q Active
+if kubectl get namespaces | grep  "${KUBE_NAMESPACE} " | grep -q Active
+then
   echo "Using existing namespace "${KUBE_NAMESPACE};
 else
   kubectl create namespace ${KUBE_NAMESPACE};
