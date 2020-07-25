@@ -24,6 +24,12 @@ if [ -z "$AGENT_TOKEN" ]; then
   exit 1
 fi
 
+if [ -z "${KUBE_NAMESPACE}" ]; then
+  echo "Namespace is not set ."
+  echo "Please set the environment variable KUBE_NAMESPACE"
+  exit 1
+fi
+
 ## Create Namespace if it does not exist
 if kubectl get namespaces | grep  "${KUBE_NAMESPACE} " | grep -q Active
 then
