@@ -5,7 +5,7 @@ SCH_ORG=               # Your Control Hub Org
 SCH_URL=               # If using StreamSets Cloud use https://cloud.streamsets.com 
 SCH_USER=              # should be of the form:  user@org  and have rights to create Provisioning Tokens
 SCH_PASSWORD=          # The password for the Control Hub User
-KUBE_NAMESPACE=        # The namespace will be created below
+KUBE_NAMESPACE=        # The namespace for the deployment; the namespace will be created if it does not exist
 
 ## Get auth token from Control Hub
 SCH_TOKEN=$(curl -s -X POST -d "{\"userName\":\"${SCH_USER}\", \"password\": \"${SCH_PASSWORD}\"}" ${SCH_URL}/security/public-rest/v1/authentication/login --header "Content-Type:application/json" --header "X-Requested-By:SDC" -c - | sed -n '/SS-SSO-LOGIN/p' | perl -lane 'print $F[$#F]')
@@ -24,8 +24,12 @@ if [ -z "$AGENT_TOKEN" ]; then
   exit 1
 fi
 
-## Create Namespace
-kubectl create namespace ${KUBE_NAMESPACE}
+## Create Namespace if it does not exist
+if kubectl describe namespace ${KUBE_NAMESPACE} | grep  Status | grep -q Active
+  echo "Using existing namespace "${KUBE_NAMESPACE};
+else
+  kubectl create namespace ${KUBE_NAMESPACE};
+fi
 
 ## Set Context
 kubectl config set-context $(kubectl config current-context) --namespace=${KUBE_NAMESPACE}
