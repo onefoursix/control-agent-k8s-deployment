@@ -19,13 +19,13 @@ fi
 AGENT_TOKEN=$(curl -s -X PUT -d "{\"organization\": \"${SCH_ORG}\", \"componentType\" : \"provisioning-agent\", \"numberOfComponents\" : 1, \"active\" : true}" ${SCH_URL}/security/rest/v1/organization/${SCH_ORG}/components --header "Content-Type:application/json" --header "X-Requested-By:SDC" --header "X-SS-REST-CALL:true" --header "X-SS-User-Auth-Token:${SCH_TOKEN}" | jq '.[0].fullAuthToken')
 
 if [ -z "$AGENT_TOKEN" ]; then
-  echo "Failed to generate control agent token."
+  echo "Error: Failed to generate control agent token."
   echo "Please verify you have Provisioning Operator permissions in SCH"
   exit 1
 fi
 
 if [ -z "${KUBE_NAMESPACE}" ]; then
-  echo "Namespace is not set ."
+  echo "Error: Namespace is not set ."
   echo "Please set the environment variable KUBE_NAMESPACE"
   exit 1
 fi
