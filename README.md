@@ -10,6 +10,10 @@ There are three steps involved:
 
 For all environments, you will need credentials for a Control Hub user with rights to create Provisioning Agents.
 
+### Prerequisites:
+- [jq](https://stedolan.github.io/jq/) must be installed on your local machine.
+  You can install jq on MacOS using the command <code>brew install jq</code> 
+
 
 ### Environment-Specific Init Steps:
 
