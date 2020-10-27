@@ -1,11 +1,23 @@
 #!/bin/sh
 
-## Set these variables 
-SCH_ORG=               # Your Control Hub Org
-SCH_URL=               # If using StreamSets Cloud use https://cloud.streamsets.com 
-SCH_USER=              # should be of the form:  user@org  and have rights to create Provisioning Tokens
-SCH_PASSWORD=          # The password for the Control Hub User
-KUBE_NAMESPACE=        # The namespace for the deployment; the namespace will be created if it does not exist
+## Set these variables ##################
+
+# SCH_ORG -- Your Control Hub Org
+SCH_ORG=
+
+# SCH_URL -- If using StreamSets Cloud use https://cloud.streamsets.com 
+SCH_URL=
+
+# SCH_USER -- should be of the form:  user@org  and have rights to create Provisioning Tokens
+SCH_USER=
+
+# SCH_PASSWORD -- The password for the Control Hub User
+SCH_PASSWORD=
+
+# KUBE_NAMESPACE -- The namespace for the deployment; the namespace will be created if it does not exist
+KUBE_NAMESPACE=
+
+#######################################
 
 ## Get auth token from Control Hub
 SCH_TOKEN=$(curl -s -X POST -d "{\"userName\":\"${SCH_USER}\", \"password\": \"${SCH_PASSWORD}\"}" ${SCH_URL}/security/public-rest/v1/authentication/login --header "Content-Type:application/json" --header "X-Requested-By:SDC" -c - | sed -n '/SS-SSO-LOGIN/p' | perl -lane 'print $F[$#F]')
