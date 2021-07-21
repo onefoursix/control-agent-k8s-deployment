@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: control-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agent
+  template:
+    metadata:
+      labels:
+        app: agent
+    spec:
+      serviceAccountName: streamsets-agent
+      containers:
+      - name: control-agent
+        image: onefoursix/control-agent:3.19.1
+        env:
+        - name: DPM_AGENT_JAVA_OPTS
+          value: "-Djavax.net.ssl.trustStore=/etc/control-agent-truststore.jks -Djavax.net.ssl.trustStorePassword=changeit"
+        - name: HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: dpm_agent_master_url
+          value: https://kubernetes.default.svc.cluster.local
+        - name: dpm_agent_cof_type
+          value: "KUBERNETES"
+        - name: dpm_agent_dpm_baseurl
+          valueFrom:
+            configMapKeyRef:
+              name: control-agent-config
+              key: sch_url
+        - name: dpm_agent_component_id
+          valueFrom:
+            configMapKeyRef:
+              name: control-agent-config
+              key: agent_id
+        - name: dpm_agent_token_string
+          valueFrom:
+            secretKeyRef:
+              name: control-agent-token
+              key: dpm_agent_token_string
+        - name: dpm_agent_name
+          value: control-agent
+        - name: dpm_agent_orgId
+          valueFrom:
+            configMapKeyRef:
+              name: control-agent-config
+              key: org
+        - name: dpm_agent_secret
+          value: control-agent-secret
