@@ -26,9 +26,7 @@ For all environments, you will need credentials for a Control Hub user with Prov
 - For GKE execute the init steps [here](https://github.com/onefoursix/control-agent-k8s-deployment/blob/master/gke.md)
 
 
-### Prepare the Script:
-
-#### For DataOps Platform
+### Prepare the Script for DataOps Platform
 
 Set these variables at the top of the file ````deploy-control-agent-on-dataops-platform.sh````:
 ````
@@ -48,7 +46,7 @@ CRED_TOKEN=<REDACTED>
 KUBE_NAMESPACE=ns1
 ````
 
-### Run the script
+### Run the script for DataOps Platform
 
 Execute the script ````deploy-control-agent-on-dataops-platform.sh````
 ````
@@ -73,7 +71,7 @@ deployment.apps/control-agent created
 
 
 
-#### For Control Hub 3.x
+#### Prepare the Script for Control Hub 3.x
 
 
 Set these variables at the top of the file ````deploy-control-agent-on-sch-3.x.sh````:
@@ -94,7 +92,7 @@ SCH_PASSWORD=<redacted>
 KUBE_NAMESPACE=ns1 
 ````
 
-### Run the script
+### Run the script for Control Hub 3.x
 
 Execute the script ````deploy-control-agent-on-sch-3.x.sh````
 ````
