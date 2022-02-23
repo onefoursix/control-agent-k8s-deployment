@@ -71,7 +71,7 @@ deployment.apps/control-agent created
 
 
 
-#### Prepare the Script for Control Hub 3.x
+### Prepare the Script for Control Hub 3.x
 
 
 Set these variables at the top of the file ````deploy-control-agent-on-sch-3.x.sh````:
