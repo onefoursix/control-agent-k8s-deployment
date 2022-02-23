@@ -2,33 +2,26 @@
 
 ## Set these variables ##################
 
-# SCH_ORG -- Your Control Hub Org
-SCH_ORG=
+# ORG_ID -- Your DataOps Platform Org ID
+ORG_ID=
 
-# SCH_URL -- If using StreamSets Cloud use https://cloud.streamsets.com 
+# SCH_URL -- Your DataOps Platform URL, for example: https://na01.hub.streamsets.com
 SCH_URL=
 
-# SCH_USER -- should be of the form:  user@org  and have rights to create Provisioning Tokens
-SCH_USER=
+# CRED_ID -- Your API Credential CRED_ID.  You must have the Provisioning Operator Role
+CRED_ID=
 
-# SCH_PASSWORD -- The password for the Control Hub User
-SCH_PASSWORD=
+# CRED_TOKEN -- Your API Credential CRED_TOKEN
+CRED_TOKEN=
 
 # KUBE_NAMESPACE -- The namespace for the deployment; the namespace will be created if it does not exist
 KUBE_NAMESPACE=
 
 #######################################
 
-## Get auth token from Control Hub
-SCH_TOKEN=$(curl -s -X POST -d "{\"userName\":\"${SCH_USER}\", \"password\": \"${SCH_PASSWORD}\"}" ${SCH_URL}/security/public-rest/v1/authentication/login --header "Content-Type:application/json" --header "X-Requested-By:SDC" -c - | sed -n '/SS-SSO-LOGIN/p' | perl -lane 'print $F[$#F]')
-if [ -z "$SCH_TOKEN" ]; then
-  echo "Failed to login to Control Hub."
-  echo "Please check your SCH login URL and credentials"
-  exit 1
-fi
 
-## Use the auth token to get a token for a Control Agent
-AGENT_TOKEN=$(curl -s -X PUT -d "{\"organization\": \"${SCH_ORG}\", \"componentType\" : \"provisioning-agent\", \"numberOfComponents\" : 1, \"active\" : true}" ${SCH_URL}/security/rest/v1/organization/${SCH_ORG}/components --header "Content-Type:application/json" --header "X-Requested-By:SDC" --header "X-SS-REST-CALL:true" --header "X-SS-User-Auth-Token:${SCH_TOKEN}" | jq '.[0].fullAuthToken')
+## Get a token for a Control Agent
+AGENT_TOKEN=$(curl -s -X PUT -d "{\"organization\": \"${ORG_ID}\", \"componentType\" : \"provisioning-agent\", \"numberOfComponents\" : 1, \"active\" : true}" ${SCH_URL}/security/rest/v1/organization/${ORG_ID}/components --header "Content-Type:application/json" --header "X-Requested-By:SDC" --header "X-SS-REST-CALL:true" --header "X-SS-App-Component-Id:${CRED_ID}" --header "X-SS-App-Auth-Token:${CRED_TOKEN}" | jq '.[0].fullAuthToken')
 
 if [ -z "$AGENT_TOKEN" ]; then
   echo "Error: Failed to generate control agent token."
@@ -65,12 +58,12 @@ AGENT_ID=$(uuidgen)
 
 ## Store connection properties in a configmap for the Control Agent
 kubectl create configmap control-agent-config \
-    --from-literal=org=${SCH_ORG} \
+    --from-literal=org=${ORG_ID} \
     --from-literal=sch_url=${SCH_URL} \
     --from-literal=agent_id=${AGENT_ID}
 
 ## Create a Service Account to run the Control Agent
-kubectl create -f yaml/control-agent-rbac.yaml
+kubectl create -f yaml/control-agent-rbac-1.22.yaml
 
 ## Deploy the Control Agent
 kubectl create -f yaml/control-agent.yaml

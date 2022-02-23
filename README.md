@@ -2,13 +2,15 @@
 
 This project provides a quick and easy way to deploy a StreamSets [Control Agent](https://streamsets.com/blog/streamsets-control-hub-kubernetes/) on various Kubernetes clusters.
 
+There are separate deployment scripts for StreamSets DataOps Platform and StreamSets Control Hub v3.x
+
 There are three steps involved:
 
 - Init your environment for your specific k8s provider
 - Prepare the install script
-- Run the install script
+- Run the appropriate install script
 
-For all environments, you will need credentials for a Control Hub user with rights to create Provisioning Agents.
+For all environments, you will need credentials for a Control Hub user with Provisioning Operator Role.
 
 ### Prerequisites:
 - [jq](https://stedolan.github.io/jq/) must be installed on your local machine.
@@ -26,13 +28,61 @@ For all environments, you will need credentials for a Control Hub user with righ
 
 ### Prepare the Script:
 
-Set these variables at the top of the file ````deploy-control-agent.sh````:
+#### For DataOps Platform
+
+Set these variables at the top of the file ````deploy-control-agent-on-dataops-platform.sh````:
+````
+ORG_ID=<Your DataOps Platform Org ID>
+SCH_URL=<Your DataOps Platform URL> # for example: https://na01.hub.streamsets.com
+CRED_ID=<Your API Credential CRED_ID>
+CRED_TOKEN=<Your API Credential CRED_TOKEN>
+KUBE_NAMESPACE=<YOUR-K8S-NAMESPACE> # The Namespace will be created if it does not exist
+````
+For example, in my environment, I set the script's variables like this:
+
+````
+SCH_ORG=8030c2e9-1a39-99ec-a5fe-97c8d4369387
+SCH_URL=https://na01.hub.streamsets.com
+CRED_ID=8b630a2d-2f40-45e6-8903-0b948c96d38f
+CRED_TOKEN=<REDACTED>
+KUBE_NAMESPACE=ns1
+````
+
+### Run the script
+
+Execute the script ````deploy-control-agent-on-dataops-platform.sh````
+````
+$ ./deploy-control-agent-on-dataops-platform.sh
+````
+
+
+
+The script output should look something like this:
+````
+$ ./deploy-control-agent-on-dataops-platform.sh
+namespace/ns1 created
+Context "mark-aks-1" modified.
+secret/control-agent-token created
+secret/control-agent-secret created
+configmap/control-agent-config created
+serviceaccount/streamsets-agent created
+role.rbac.authorization.k8s.io/streamsets-agent created
+rolebinding.rbac.authorization.k8s.io/streamsets-agent created
+deployment.apps/control-agent created
+````
+
+
+
+#### For Control Hub 3.x
+
+
+Set these variables at the top of the file ````deploy-control-agent-on-sch-3.x.sh````:
 ````
 SCH_ORG=<YOUR-SCH-ORG>
 SCH_URL=<YOUR-SCH-URL>
 SCH_USER=<YOUR-SCH-USER>
 SCH_PASSWORD=<YOUR-SCH-PASSWORD>
-KUBE_NAMESPACE=<YOUR-K8S-NAMESPACE>
+KUBE_NAMESPACE=<YOUR-K8S-NAMESPACE> # The Namespace will be created if it does not exist
 ````
 For example, in my environment, I set the script's variables like this:
 
@@ -46,9 +96,9 @@ KUBE_NAMESPACE=ns1
 
 ### Run the script
 
-Execute the script ````deploy-control-agent.sh````
+Execute the script ````deploy-control-agent-on-sch-3.x.sh````
 ````
-$ ./deploy-control-agent.sh
+$ ./deploy-control-agent-on-sch-3.x.sh
 ````
 
 
