@@ -26,7 +26,10 @@ For all environments, you will need credentials for a Control Hub user with Prov
 - For GKE execute the init steps [here](https://github.com/onefoursix/control-agent-k8s-deployment/blob/master/gke.md)
 
 
-### Prepare the Script for DataOps Platform
+### Instructions for deploying on DataOps Platform
+Follow these steps only if you are deploying on StreamSets DataOps Platform
+
+#### Prepare the Script for DataOps Platform
 
 Set these variables at the top of the file ````deploy-control-agent-on-dataops-platform.sh````:
 ````
@@ -46,7 +49,7 @@ CRED_TOKEN=<REDACTED>
 KUBE_NAMESPACE=ns1
 ````
 
-### Run the script for DataOps Platform
+#### Run the script for DataOps Platform
 
 Execute the script ````deploy-control-agent-on-dataops-platform.sh````
 ````
@@ -69,6 +72,8 @@ rolebinding.rbac.authorization.k8s.io/streamsets-agent created
 deployment.apps/control-agent created
 ````
 
+### Instructions for deploying on Control Hub 3.x
+Follow these steps only if you are deploying on StreamSets Control Hub 3.x
 
 
 ### Prepare the Script for Control Hub 3.x
