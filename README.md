@@ -76,7 +76,7 @@ deployment.apps/control-agent created
 Follow these steps only if you are deploying on StreamSets Control Hub 3.x
 
 
-### Prepare the Script for Control Hub 3.x
+#### Prepare the Script for Control Hub 3.x
 
 
 Set these variables at the top of the file ````deploy-control-agent-on-sch-3.x.sh````:
@@ -97,7 +97,7 @@ SCH_PASSWORD=<redacted>
 KUBE_NAMESPACE=ns1 
 ````
 
-### Run the script for Control Hub 3.x
+#### Run the script for Control Hub 3.x
 
 Execute the script ````deploy-control-agent-on-sch-3.x.sh````
 ````
