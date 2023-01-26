@@ -17,6 +17,10 @@ For all environments, you will need credentials for a Control Hub user with Prov
   You can install jq on MacOS using the command <code>brew install jq</code> 
 
 
+### If your namespace has resource quotas
+If the namespace you are deploying Control Agent into has resource quotas, make sure to include resource requests and limits in your control-agent's manifest.  See the example
+[here](https://github.com/onefoursix/control-agent-k8s-deployment/blob/master/yaml/control-agent-with-resource-limits.yaml).
+
 ### Environment-Specific Init Steps:
 
 - For AKS execute the init steps [here](https://github.com/onefoursix/control-agent-k8s-deployment/blob/master/aks.md)
