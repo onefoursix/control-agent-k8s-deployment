@@ -32,51 +32,6 @@ If the namespace you are deploying Control Agent into has resource quotas, make 
 - For GKE execute the init steps [here](https://github.com/onefoursix/control-agent-k8s-deployment/blob/master/gke.md)
 
 
-### Instructions for deploying on DataOps Platform
-Follow these steps only if you are deploying on StreamSets DataOps Platform
-
-#### Prepare the Script for DataOps Platform
-
-Set these variables at the top of the file ````deploy-control-agent-on-dataops-platform.sh````:
-````
-ORG_ID=<Your DataOps Platform Org ID>
-SCH_URL=<Your DataOps Platform URL> # for example: https://na01.hub.streamsets.com
-CRED_ID=<Your API Credential CRED_ID>
-CRED_TOKEN=<Your API Credential CRED_TOKEN>
-KUBE_NAMESPACE=<YOUR-K8S-NAMESPACE> # The Namespace will be created if it does not exist
-````
-For example, in my environment, I set the script's variables like this:
-
-````
-SCH_ORG=8030c2e9-1a39-99ec-a5fe-97c8d4369387
-SCH_URL=https://na01.hub.streamsets.com
-CRED_ID=8b630a2d-2f40-45e6-8903-0b948c96d38f
-CRED_TOKEN=<REDACTED>
-KUBE_NAMESPACE=ns1
-````
-
-#### Run the script for DataOps Platform
-
-Execute the script ````deploy-control-agent-on-dataops-platform.sh````
-````
-$ ./deploy-control-agent-on-dataops-platform.sh
-````
-
-
-
-The script output should look something like this:
-````
-$ ./deploy-control-agent-on-dataops-platform.sh
-namespace/ns1 created
-Context "mark-aks-1" modified.
-secret/control-agent-token created
-secret/control-agent-secret created
-configmap/control-agent-config created
-serviceaccount/streamsets-agent created
-role.rbac.authorization.k8s.io/streamsets-agent created
-rolebinding.rbac.authorization.k8s.io/streamsets-agent created
-deployment.apps/control-agent created
-````
 
 ### Instructions for deploying on Control Hub 3.x
 Follow these steps only if you are deploying on StreamSets Control Hub 3.x
