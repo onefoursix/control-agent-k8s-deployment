@@ -1,10 +1,10 @@
 # IMPORTANT NOTE
 
-This project is for use with legacy Control Hub 3.x.  Users of StreamSets Platform now enjoy [top-level Kubernetes deployment support](https://docs.streamsets.com/portal/platform-controlhub/controlhub/UserGuide/Deployments/Kubernetes.html#concept_ec3_cqg_hvb) and should deploy StreamSets' new Kubernetes Agent using the steps [here](https://docs.streamsets.com/portal/platform-controlhub/controlhub/UserGuide/Environments/Kubernetes.html#concept_l1w_h4g_2vb) instead.
+This project is for use with legacy Control Hub 3.x.  Users of StreamSets Platform now enjoy [top-level Kubernetes deployment support](https://docs.streamsets.com/portal/platform-controlhub/controlhub/UserGuide/Deployments/Kubernetes.html#concept_ec3_cqg_hvb) and should deploy StreamSets' new Kubernetes Agent using the steps [here](https://docs.streamsets.com/portal/platform-controlhub/controlhub/UserGuide/Environments/Kubernetes.html#concept_l1w_h4g_2vb) instead.  It is strongly recommended that users deploying Data Collector on legacy StreamSets Control Hub v3.x upgrade to StreamSets Platform.
 
 ## Control Agent install on Kubernetes
 
-This project provides a quick and easy way to deploy a StreamSets [Control Agent](https://streamsets.com/blog/streamsets-control-hub-kubernetes/) on various Kubernetes clusters for legacy StreamSets Control Hub v3.x.  It is strongly recommended that users deploying Data Collector on legacy StreamSets Control Hub v3.x upgrade to StreamSets Platform.
+This project provides a quick and easy way to deploy a StreamSets [Control Agent](https://streamsets.com/blog/streamsets-control-hub-kubernetes/) on various Kubernetes clusters for legacy StreamSets Control Hub v3.x. 
 
 There are three steps involved:
 
