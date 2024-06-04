@@ -34,8 +34,6 @@ If the namespace you are deploying Control Agent into has resource quotas, make 
 
 
 ### Instructions for deploying on Control Hub 3.x
-Follow these steps only if you are deploying on StreamSets Control Hub 3.x
-
 
 #### Prepare the Script for Control Hub 3.x
 
